@@ -1,68 +1,52 @@
+import React from "react";
+import {
+  CardImg,
+  Container,
+  Button,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  ModalFooter,
+} from "reactstrap";
+import { appContext } from "../context/context";
 
-import React from 'react';
-import { CardImg,Container,Button,Modal,ModalBody,ModalHeader,ModalFooter} from 'reactstrap';
-import ListCart from './ListCart'
+function ProductSheet(props) {
 
 
-class ProductSheet extends React.Component{
-    constructor(props){
-        super();
-        this.state = {
-            modal:false,
-            ListCart,
-            stock: props.props.stock
-            //////////////////////
-        };
+  const [data,setData] = React.useContext(appContext);
+  const [modal, setModal] = React.useState(false);
+  const toggle = () => setModal(!modal);
 
-        this.toggle = this.toggle.bind(this);
-        // this.agregarCarrito = this.agregarCarrito.bind(this); con arrow function no es necesario
-    }
 
-    toggle(){
-        this.setState(prevState => ({
-            modal: !prevState.modal
-            
-        }));
-    }
 
-    agregarCarrito = () =>{
-        ListCart.push({
-            "titulo": this.props.props.titulo,
-            "precio": this.props.props.precio
-            
-        });
+  return (
+    <Container>
+      <Button onClick={toggle}>Ver ficha</Button>
+      <Modal isOpen={modal}>
+        <ModalHeader>{props.props.titulo}</ModalHeader>
+        <ModalBody>
+          <CardImg src={props.props.imagen}></CardImg>
+          <p>El detalle del producto selecionado es el siguiente:</p>
+          {props.props.descripcion}
+          <p>
+            Este producto tiene un valor de <b>{props.props.precio}</b>{" "}
+            pesos.
+          </p>
+        </ModalBody>
 
-        
-
-        this.setState(prevState =>({
-            modal: !prevState.modal,
-            stock: this.state.stock -1
-        }));
-
-    }
-
-    
-    render(){
-        return(
-            <Container>
-                <Button onClick={this.toggle}>Ver ficha</Button>
-                <Modal isOpen={this.state.modal}>
-                    <ModalHeader>{this.props.props.titulo}</ModalHeader>
-                    <ModalBody>
-                        <CardImg src={this.props.props.imagen}></CardImg>
-                        <p>El detalle del producto selecionado es el siguiente:</p>
-                        {this.props.props.descripcion}
-                            <p>Este producto tiene un valor de <b>{this.props.props.precio}</b> pesos.</p>
-                    </ModalBody>
-
-                    <ModalFooter className="modalFooter">
-                        <Button color="primary" onClick={this.agregarCarrito}>Agregar al Carrito</Button>
-                        <Button color="secondary" onClick={this.toggle}>Volver atrás</Button>
-                    </ModalFooter>
-                </Modal>
-            </Container>
-        );
-    }
+        <ModalFooter className="modalFooter">
+          <Button color="primary" onClick={()=>{
+            setData(...data,{'titulo':props.props.titulo, 'precio':props.props.precio})
+          }}>
+            Agregar al Carrito
+          </Button>
+          <Button color="secondary" onClick={toggle}>
+            Volver atrás
+          </Button>
+        </ModalFooter>
+      </Modal>
+    </Container>
+  );
 }
 
 export default ProductSheet;
