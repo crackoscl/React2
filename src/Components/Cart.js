@@ -34,7 +34,7 @@ function Cart() {
     <div>
       <Button id="Popover1" color="warning">
         <span className="material-icons">shopping_cart</span>
-          <Badge>{ArrayCart.length}</Badge>
+          <Badge color="secondary">{ArrayCart.length}</Badge>
       </Button>
       <Popover
         target="Popover1"
