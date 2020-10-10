@@ -13,16 +13,20 @@ import { appContext } from "../context/context";
 function ProductSheet(props) {
 
 
-  const [data,setData] = React.useContext(appContext);
+  const [setData] = React.useContext(appContext);
   const [modal, setModal] = React.useState(false);
   const toggle = () => setModal(!modal);
 
 
+   const AddCart = () =>{
+    setData.push({'titulo':props.props.titulo,'precio':props.props.precio})
+    setModal(false)
+   }
 
   return (
     <Container>
       <Button onClick={toggle}>Ver ficha</Button>
-      <Modal isOpen={modal}>
+      <Modal isOpen={modal} toggle={toggle} >
         <ModalHeader>{props.props.titulo}</ModalHeader>
         <ModalBody>
           <CardImg src={props.props.imagen}></CardImg>
@@ -35,9 +39,7 @@ function ProductSheet(props) {
         </ModalBody>
 
         <ModalFooter className="modalFooter">
-          <Button color="primary" onClick={()=>{
-            setData(...data,{'titulo':props.props.titulo, 'precio':props.props.precio})
-          }}>
+          <Button color="primary" onClick={AddCart}>
             Agregar al Carrito
           </Button>
           <Button color="secondary" onClick={toggle}>

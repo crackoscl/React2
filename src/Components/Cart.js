@@ -4,15 +4,14 @@ import {
   Popover,
   PopoverHeader,
   PopoverBody,
-  Badge,
   Table,
+  Badge,
 } from "reactstrap";
 import { appContext } from "../context/context";
 
 function Cart() {
   const [popoverOpen, setPopoverOpen] = React.useState(false);
   const [data] = React.useContext(appContext);
-  console.log(data)
 
   const toggle = () => setPopoverOpen(!popoverOpen);
 
@@ -35,7 +34,7 @@ function Cart() {
     <div>
       <Button id="Popover1" color="warning">
         <span className="material-icons">shopping_cart</span>
-        <Badge color="secondary">{ArrayCart.length}</Badge>
+          <Badge color="secondary">{ArrayCart.length}</Badge>
       </Button>
       <Popover
         target="Popover1"
